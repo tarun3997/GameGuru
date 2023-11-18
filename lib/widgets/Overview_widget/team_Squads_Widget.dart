@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gameguru/assets/colors/app_color.dart';
 
-Widget teamSquadsWidget(context){
+Widget teamSquadsWidget(context, String teamName){
   TextStyle textStyle3 = const TextStyle(color: AppColors.fontColor1,fontSize: 14);
   return Container(
     margin: const EdgeInsets.only(right: 6),
@@ -18,7 +18,7 @@ Widget teamSquadsWidget(context){
       ),
       Padding(
         padding: const EdgeInsets.only(top: 10.0),
-        child: Text("IND",style: textStyle3,),
+        child: Text(teamName,style: textStyle3,),
       )
     ],),
   );

@@ -52,10 +52,13 @@ class _MatchCommentaryState extends State<MatchCommentary> {
                   updatedCommText = commText;
                 }
                 final overNumber = matchComm[index]['overNumber'];
+                String overNum;
+                if(overNumber != null){
+                  overNum = overNumber.toString();
+                }else{
+                  overNum = '';
+                }
 
-                // final commText = matchComm[index]['commText'];
-                // final formatId = matchComm[index]['commentaryFormats']['bold']['formatId'];
-                // final formatValue = matchComm[index]['commentaryFormats']['bold']['formatValue'];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
@@ -63,15 +66,11 @@ class _MatchCommentaryState extends State<MatchCommentary> {
                     children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 5),
-                          width: 22,height: 22,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.2,color: Colors.white),
-                          shape: BoxShape.circle
-                        ),
-                        child: Text(overNumber),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 2.0),
+                          child: Text(overNum,style: TextStyle(color: Colors.white)),
                         ),
                         Flexible(
                           child: Text(updatedCommText,

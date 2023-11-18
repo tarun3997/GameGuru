@@ -4,8 +4,10 @@ class KeyStats {
   final String? teamName;
   final String? points;
   final String? pointsType;
+  final String? statsType;
 
   KeyStats({
+    required this.statsType,
     required this.type,
     required this.playerName,
     required this.teamName,

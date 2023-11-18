@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gameguru/assets/colors/app_color.dart';
 import 'package:gameguru/models/local_model/score_card_model.dart';
@@ -108,7 +107,7 @@ class _MatchesScreenState extends State<MatchesScreen>
                   scrolledUnderElevation: 0,
                   backgroundColor: const Color(0xff01040a),
                   title: Text(
-                    "Utakarsh",
+                    "GameGuru",
                     style: GoogleFonts.getFont('Josefin Sans',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -285,7 +284,10 @@ class _MatchesScreenState extends State<MatchesScreen>
                                             // final isTeam2Batting = !isTeam1Batting;
                                             return  Center(
                                                 child: GestureDetector(onTap: (){
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  ScorecardDetailScreen(matchType: MatchType.Live, matchId: matchId,)));
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  ScorecardDetailScreen(matchType: MatchType.Live, matchId: matchId,
+                                                      team1: team1,team2: team2, teamDesc: '',
+                                                      status: matchStatus,
+                                                      team1Run: '$runs1',team2Run: '$runs2',team1Overs: '$overs1',team2Overs: '$overs2',team1Wkts: '$wickets1',team2Wkts: '$wickets2')));
                                                 },
                                                   child: LiveScoreCard(
                                                     matchStadium:
@@ -438,7 +440,7 @@ class _MatchesScreenState extends State<MatchesScreen>
                                         matchStadium: '$matchNumber, $matchFormat, $seriesName',
                                         team1: '$teamANAme',
                                         team2: "$teamBNAme",
-                                        startTime: formattedTime, team1ImageId: '$teamAImage', team2ImageId: '$teamBImage',
+                                        startTime: formattedTime, team1ImageId: '', team2ImageId: '',
                                       ),
                                     );
                                   }
@@ -495,6 +497,9 @@ class _MatchesScreenState extends State<MatchesScreen>
                                   itemBuilder: (context, matchIndex) {
                                     final teamAName = matches[matchIndex]['matchInfo']['team1']['teamSName'];
                                     final teamBName = matches[matchIndex]['matchInfo']['team2']['teamSName'];
+                                    final stateTitle = matches[matchIndex]['matchInfo']['stateTitle'];
+                                    final matchId = matches[matchIndex]['matchInfo']['matchId'];
+                                    final matchDesc = matches[matchIndex]['matchInfo']['matchDesc'];
                                     final teamAScore = matches[matchIndex]['matchScore']['team1Score']['inngs1'];
                                     final teamBScore = matches[matchIndex]['matchScore']['team2Score']['inngs1'];
                                     final teamWinBy = matches[matchIndex]['matchInfo']['status'];
@@ -504,27 +509,37 @@ class _MatchesScreenState extends State<MatchesScreen>
                                     final teamBWickets = teamBScore['wickets'];
                                     final teamAOvers = teamAScore['overs'];
                                     final teamBOvers = teamBScore['overs'];
-                                    final parts = teamWinBy.split('');
-                                    final match = RegExp(r'(\d+) runs').firstMatch(teamWinBy);
-                                    String? runs;
-                                    if(parts.length > 2){
-                                      runs = match?.group(1);
+                                    String modifiedWord = teamWinBy.replaceFirst(RegExp(r'^\S+\s+\S+\s+'), '');
+                                    int teamAWkts, teamBWkts;
+                                    if (teamAWickets != null ){
+                                      teamAWkts = teamAWickets;
+                                    }else{
+                                      teamAWkts = 0;
                                     }
+                                    if (teamBWickets != null){
+                                      teamBWkts = teamBWickets;
+                                    }else{
+                                      teamBWkts = 0;
+                                    }
+
                                     return Center(
                                         child: GestureDetector(onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  ScorecardDetailScreen(matchType: MatchType.Upcoming, matchId: 0,)));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  ScorecardDetailScreen(matchType: MatchType.Upcoming, matchId: matchId,
+                                            team1: '$teamAName',team2: teamBName, teamDesc: matchDesc,
+                                          status: teamWinBy,
+                                          team1Run: '$teamARuns',team2Run: '$teamBRuns',team1Overs: '$teamAOvers',team2Overs: '$teamBOvers',team1Wkts: '$teamAWkts',team2Wkts: '$teamBWkts',)));
                                         },
                                           child: FinishedMatchScoreCard(
                                             matchStadium: '$seriesName',
                                             team1: '$teamAName',
                                             team2: "$teamBName",
-                                            wonTeam: "NZ",
-                                            winBy: "$runs",
+                                            wonTeam: "$stateTitle",
+                                            winBy: "$modifiedWord",
                                             team1Score: "$teamARuns",
-                                            team1Wickets: '$teamAWickets',
+                                            team1Wickets: '$teamAWkts',
                                             team1Overs: '$teamAOvers',
                                             team2Score: '$teamBRuns',
-                                            team2Wickets: '$teamBWickets',
+                                            team2Wickets: '$teamBWkts',
                                             team2Overs: '$teamBOvers',
                                           ),
                                         ));

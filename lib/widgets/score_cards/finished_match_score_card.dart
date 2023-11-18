@@ -126,7 +126,7 @@ class FinishedMatchScoreCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "$wonTeam Won",
+                          "$wonTeam",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -134,7 +134,7 @@ class FinishedMatchScoreCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "by $winBy",
+                          "$winBy",
                           style: const TextStyle(color: Color(0xffc9c2c2),fontSize: 10),
                         ),
 

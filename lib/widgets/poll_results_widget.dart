@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gameguru/assets/colors/app_color.dart';
 import 'package:gameguru/widgets/Overview_widget/key_stats_container.dart';
 
-Widget pollResultWidget(context){
+Widget pollResultWidget(context, teamA, teamB){
   final width = MediaQuery.of(context).size.width;
   final height = MediaQuery.of(context).size.height;
   return Container(
@@ -30,7 +30,7 @@ Widget pollResultWidget(context){
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(width: 0.5,color: AppColors.fontColor1)
             ),
-            child: const Center(child: Text("AFG : 28%",style: TextStyle(color: AppColors.primary,fontSize: 14))),
+            child: Center(child: Text("$teamA : 28%",style: TextStyle(color: AppColors.primary,fontSize: 14))),
           ),
         ),
         Expanded(
@@ -41,11 +41,11 @@ Widget pollResultWidget(context){
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(width: 0.5,color: AppColors.fontColor1)
             ),
-            child: const Center(child: Row(
+            child:  Center(child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.emoji_events_rounded,color: Colors.yellowAccent,size: 16,),
-                Text(" IND : 72%",style: TextStyle(color: AppColors.primary,fontSize: 14)),
+                Text(" $teamB : 72%",style: TextStyle(color: AppColors.primary,fontSize: 14)),
               ],
             )),
           ),

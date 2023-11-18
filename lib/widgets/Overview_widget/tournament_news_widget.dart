@@ -24,7 +24,7 @@ Widget newsBox(context){
   );
 }
 
-Widget headlines(context){
+Widget headlines(context, String headline ){
   return Container(
     margin: const EdgeInsets.only(right: 14),
     width: MediaQuery.of(context).size.width * 0.65,
@@ -42,9 +42,9 @@ Widget headlines(context){
               color: Colors.white
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
-          child: Text("[Watch] Kusal Mendis Get To His 65-Ball Century With Massive Six Against Hasan Ali",style: TextStyle(color: Colors.white,fontSize: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(headline,style: const TextStyle(color: Colors.white,fontSize: 16),
           maxLines: 2,overflow: TextOverflow.ellipsis),
         ),
       ],),

@@ -12,8 +12,18 @@ import 'package:gameguru/widgets/tabbar_view/score_card_details_tabbar_view/scor
 class ScorecardDetailScreen extends StatefulWidget {
   final MatchType matchType;
   final int matchId;
+  final String team1;
+  final String team2;
+  final String team1Run;
+  final String team2Run;
+  final String team1Wkts;
+  final String team2Wkts;
+  final String team1Overs;
+  final String team2Overs;
+  final String teamDesc;
+  final String status;
 
-  const ScorecardDetailScreen({super.key, required this.matchType, required this.matchId});
+  const ScorecardDetailScreen({super.key, required this.matchType, required this.matchId, required this.team1, required this.team2, required this.teamDesc, required this.team1Run, required this.team2Run, required this.team1Wkts, required this.team2Wkts, required this.team1Overs, required this.team2Overs, required this.status});
 
   @override
   State<ScorecardDetailScreen> createState() => _ScorecardDetailScreenState();
@@ -63,22 +73,22 @@ class _ScorecardDetailScreenState extends State<ScorecardDetailScreen> with Sing
       appBarSize = 130;
     }
     else if (widget.matchType == MatchType.Upcoming){
-      appBar = matchCompleteAppbar();
+      appBar = matchCompleteAppbar(team1: widget.team1,team2: widget.team2,team1Overs: widget.team1Overs,team1Runs: widget.team1Run,team1Wkts: widget.team1Wkts,team2Overs: widget.team2Overs,team2Runs: widget.team2Run,team2Wkts: widget.team2Wkts, status: widget.status);
       appBarSize = 180;
     }else if (widget.matchType == MatchType.Finished){
-      appBar = matchCompleteAppbar();
+      appBar = matchCompleteAppbar(team1: widget.team1,team2: widget.team2,team1Overs: widget.team1Overs,team1Runs: widget.team1Run,team1Wkts: widget.team1Wkts,team2Overs: widget.team2Overs,team2Runs: widget.team2Run,team2Wkts: widget.team2Wkts,status: widget.status);
       appBarSize = 180;
     }
 
     Widget liveTabBar;
-    liveTabBar = const MatchCompleteLiveTabBarView();
+    liveTabBar =  MatchCompleteLiveTabBarView(matchId: widget.matchId,);
     if (widget.matchType == MatchType.Live){
       liveTabBar = LiveMatchTabBar(matchId: widget.matchId,);
     }
     else if (widget.matchType == MatchType.Upcoming){
-      liveTabBar = MatchCompleteLiveTabBarView();
+      liveTabBar = MatchCompleteLiveTabBarView(matchId: widget.matchId,);
     }else if (widget.matchType == MatchType.Finished){
-      liveTabBar = MatchCompleteLiveTabBarView();
+      liveTabBar = MatchCompleteLiveTabBarView(matchId: widget.matchId,);
     }
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -100,8 +110,8 @@ class _ScorecardDetailScreenState extends State<ScorecardDetailScreen> with Sing
                   GestureDetector(onTap: (){
                     Navigator.pop(context);
                   },child: const Icon(Icons.arrow_back_rounded,size: 26, color: AppColors.primary,)),
-                  const SizedBox(width: 10,),
-                  const Text("AFG vs IND, 9th ODI"),
+                  const SizedBox(width: 8,),
+                  Flexible(child: Text("${widget.team1} vs ${widget.team2}, ${widget.teamDesc}",overflow: TextOverflow.ellipsis)),
                 ],
               ),
                 actions: [
@@ -168,7 +178,7 @@ class _ScorecardDetailScreenState extends State<ScorecardDetailScreen> with Sing
             controller: _tabController,
             children:   [
               Tab(
-                child: InfoTabBarView(),
+                child: InfoTabBarView(matchId: widget.matchId),
               ),
               Tab(
                 text: "Tab2",

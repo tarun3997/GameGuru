@@ -129,8 +129,10 @@ class ScoreCardWithDate extends StatelessWidget {
   final String team1;
   final String team2;
   final String startTime;
+  final String matchDate;
 
   const ScoreCardWithDate({super.key,
+    required this.matchDate,
     required this.matchStadium,
     required this.team1,
     required this.team2,
@@ -142,10 +144,10 @@ class ScoreCardWithDate extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          child: Text("Today, 10 October",style: TextStyle(color: AppColors.primary),),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(vertical: 8.0),
+        //   child: Text(matchDate,style: TextStyle(color: AppColors.primary),),
+        // ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

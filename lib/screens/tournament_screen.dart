@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gameguru/assets/colors/app_color.dart';
+import 'package:gameguru/services/server/series_server/series_matches_api.dart';
 import 'package:gameguru/widgets/Overview_widget/key_stats_container.dart';
 import 'package:gameguru/widgets/Overview_widget/tournament_news_widget.dart';
 import 'package:gameguru/widgets/score_card.dart';
 import 'package:gameguru/widgets/series_fixture_widget.dart';
 import 'package:gameguru/widgets/tabbar_view/tournament_overview.dart';
+import 'package:intl/intl.dart';
 
 class TournamentScreen extends StatefulWidget {
   final int initialTabIndex;
@@ -20,10 +22,13 @@ class _TournamentScreenState extends State<TournamentScreen> with SingleTickerPr
     thickness: 0.2,
     color: Color(0xff686c68),
   );
+  late Future<Map<String, dynamic>> seriesMatch;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 6, vsync: this,initialIndex: widget.initialTabIndex);
+    seriesMatch = seriesMatches(6732);
   }
 
 
@@ -146,12 +151,76 @@ class _TournamentScreenState extends State<TournamentScreen> with SingleTickerPr
                 },)
               ),
               Tab(
-                child: ListView.builder(
-                  itemCount: 10,
-                    itemBuilder: (context, index){
-                      return const Center(child: ScoreCardWithDate(matchStadium: '1st ODI, Narendra Modi Stadium, Ahmedabad, India', team1: 'END', team2: "NZ", startTime: "02:00 Pm"));
-                    },
-              ),
+                child: FutureBuilder<Map<String, dynamic>>(
+                  future: seriesMatch,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        "Error : ${snapshot.hasError}",
+                        style: const TextStyle(color: Colors.white),
+                      );
+                    } else if (snapshot.hasData) {
+                      final item = snapshot.data!;
+                      final matchDetail = item['matchDetails'];
+                      return ListView.builder(
+                        itemCount: matchDetail.length,
+                        itemBuilder: (context, index) {
+                          final matchDetails = item['matchDetails'][index];
+                          if (matchDetails.containsKey('matchDetailsMap') &&
+                              matchDetails['matchDetailsMap'].isNotEmpty) {
+                            final date = matchDetails['matchDetailsMap']['key'];
+                            final matchList = matchDetails['matchDetailsMap']['match'];
+
+                            List<Widget> matchWidgets = [];
+
+                            for (int i = 0; i < matchList.length; i++) {
+                              if (matchList[i].containsKey('matchInfo')) {
+                                final match = matchList[i]['matchInfo'];
+                                final matchDesc = match['matchDesc'];
+                                final matchDescNumber = matchDesc.replaceFirst('Match', '');
+                                final matchFormat = match['matchFormat'];
+                                final seriesName = match['seriesName'];
+                                final startDate = match['startDate'];
+                                final team1SName = match['team1']['teamSName'];
+                                final team2SName = match['team2']['teamSName'];
+                                final startDateInMillis = int.tryParse(startDate) ?? 0;
+                                final startDates = DateTime.fromMillisecondsSinceEpoch(startDateInMillis);
+                                final formattedTime = DateFormat.jm().format(startDates);
+
+                                matchWidgets.add(
+                                  Center(
+                                    child: ScoreCardWithDate(
+                                      matchDate: date,
+                                      matchStadium: '$matchDescNumber $matchFormat, $seriesName',
+                                      team1: team1SName,
+                                      team2: team2SName,
+                                      startTime: formattedTime,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 5),
+                                  child: Text(date, style: TextStyle(color: AppColors.primary)),
+                                ),
+                                ...matchWidgets,
+                              ],
+                            );
+                          }
+                          return Container();
+                        },
+                      );
+                    }
+                    return Container();
+                  },
+                ),
               ),
               Tab(
                 child: ListView.builder(

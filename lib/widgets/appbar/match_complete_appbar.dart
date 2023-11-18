@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gameguru/assets/colors/app_color.dart';
 import 'package:gameguru/widgets/Overview_widget/key_stats_container.dart';
 
-Widget matchCompleteAppbar(){
+Widget matchCompleteAppbar({required String team1,required String team1Runs, required String team1Wkts, required String team1Overs,required String status,
+  required String team2, required String team2Runs, required String team2Wkts, required String team2Overs}){
   TextStyle textStyle1 = const TextStyle(color: AppColors.fontColor1,fontSize: 12);
   TextStyle textStyle3 = const TextStyle(color: AppColors.fontColor1,fontSize: 9);
   TextStyle textStyle2 = const TextStyle(color: AppColors.primary,fontSize: 14);
@@ -21,12 +22,12 @@ Widget matchCompleteAppbar(){
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("AFG",style: textStyle1,),
+                    Text(team1,style: textStyle1,),
                     Row(children: [
-                      Text("272-8",style: textStyle2,),
+                      Text("$team1Runs-$team1Wkts",style: textStyle2,),
                       const SizedBox(width: 5,),
 
-                      Text("(50.0)",style: textStyle3,),
+                      Text("($team1Overs)",style: textStyle3,),
                     ],)
                   ],),
               ],
@@ -37,11 +38,11 @@ Widget matchCompleteAppbar(){
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("AFG",style: textStyle1,),
+                    Text(team2,style: textStyle1,),
                     Row(children: [
-                      Text("(50.0)",style: textStyle3,),
+                      Text("($team2Overs)",style: textStyle3,),
                       const SizedBox(width: 5,),
-                      Text("272-8",style: textStyle2,),
+                      Text("$team2Runs-$team2Wkts",style: textStyle2,),
 
                     ],)
                   ],),
@@ -55,7 +56,7 @@ Widget matchCompleteAppbar(){
       divider,
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text("IND won by 8 wickets",style: textStyle4),
+        child: Text(status,style: textStyle4),
       )
     ],
   );
