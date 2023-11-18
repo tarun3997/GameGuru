@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "407044005359",
+    "project_id": "gameguru-b3d4b",
+    "storage_bucket": "gameguru-b3d4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407044005359:android:2de2331acd02cdf150ea1a",
+        "android_client_info": {
+          "package_name": "com.example.gameguru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407044005359-telorvf90mn88lbd14lqlt68946nu984.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gameguru",
+            "certificate_hash": "a124b81e5e9b78b1af02f8591d6f85335dbbf7fc"
+          }
+        },
+        {
+          "client_id": "407044005359-n65lk9f02pe1qha2kb6vqcp4k2no135b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN5ut7vUtMcn9HfetPQpZ6TkBtF9V89KQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407044005359-n65lk9f02pe1qha2kb6vqcp4k2no135b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
